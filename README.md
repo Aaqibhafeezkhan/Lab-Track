@@ -6,6 +6,7 @@ borrowing process (paper borrow slip → instructor signature → return check �
 ## Developers
 Vennjy Lugo
 Carl Joshua Magdael
+Clarence Jay Sy
 
 ## Problem
 Students borrow lab equipment in bulk through a paper slip. The lab has poor signal,
