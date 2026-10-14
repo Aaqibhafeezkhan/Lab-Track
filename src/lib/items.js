@@ -1,0 +1,35 @@
+import {
+  collection, doc, addDoc, updateDoc, query, where, onSnapshot, serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../firebase";
+
+const itemsRef = collection(db, "items");
+
+// Live list. Students use { onlyActive: true }; the admin catalog page shows everything.
+export function watchItems(callback, { onlyActive = false } = {}) {
+  const q = onlyActive ? query(itemsRef, where("active", "==", true)) : itemsRef;
+  return onSnapshot(q, (snap) => {
+    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    items.sort((a, b) => a.name.localeCompare(b.name));
+    callback(items);
+  });
+}
+
+export function addItem({ name, totalQty }) {
+  return addDoc(itemsRef, {
+    name,
+    totalQty,
+    availableQty: totalQty,
+    active: true,
+    createdAt: serverTimestamp(),
+  });
+}
+
+export function updateItem(id, changes) {
+  return updateDoc(doc(db, "items", id), changes);
+}
+
+// Deactivate instead of deleting, so old slips still make sense.
+export function setItemActive(id, active) {
+  return updateDoc(doc(db, "items", id), { active });
+}

@@ -11,6 +11,7 @@
   "dependencies": {
     "firebase": "^13.0.0",
     "preact": "^10.29.8",
+    "preact-iso": "^2.12.2",
     "qrcode": "^1.5.4",
     "signature_pad": "^5.1.4"
   },
@@ -20,6 +21,6 @@
     "vite-plugin-pwa": "^2.0.0"
   },
   "overrides": {
-     "@grpc/grpc-js": "^1.14.5"
-   }
+    "@grpc/grpc-js": "^1.14.5"
+  }
 }
