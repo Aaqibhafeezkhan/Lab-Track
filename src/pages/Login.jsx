@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { loginWithGoogle } from "../lib/auth";
 import "../styles/Login.css";
+import googleLogo from "../assets/google-logo.svg";
 
 
 export default function Login() {
@@ -93,13 +94,9 @@ export default function Login() {
 
         <div class="divider"><span>or</span></div>
 
-        <button
-          type="button"
-          class="btn-google"
-          onClick={handleGoogleLogin}
-          disabled={loading}
-        >
-          Sign in with Google
+        <button type="button" class="btn-google" onClick={handleGoogleLogin} disabled={loading}>
+            <img src={googleLogo} alt=" " class="google-logo" width="30" height="30"/>
+            Sign in with Google
         </button>
       </section>
     </main>
