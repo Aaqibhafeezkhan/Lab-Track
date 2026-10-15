@@ -27,6 +27,7 @@ import { AdminSlipDetail } from "./pages/AdminSlipDetail";
 import { AdminOut } from "./pages/AdminOut";
 import { AdminCatalog } from "./pages/AdminCatalog";
 import { NotFound } from "./pages/NotFound";
+import Landing from "./pages/Landing";
 
 const signedIn = (Page) => (props) => (
   <RequireRole>
@@ -57,6 +58,7 @@ export function App() {
             <Route path="/" component={Home} />
             <Route path="/login" component={Login} />
 
+            <Route path="/landing" component={Landing} />
             <Route path="/borrow" component={BorrowPage} />
             <Route path="/slips" component={MySlipsPage} />
             <Route path="/slips/:id" component={SlipDetailPage} />

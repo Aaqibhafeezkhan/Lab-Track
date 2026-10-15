@@ -1,6 +1,8 @@
 import { useLocation } from "preact-iso";
 import { useCurrentUser } from "../lib/currentUser";
 import { logout } from "../lib/auth";
+import { useState } from "preact/hooks";
+
 
 const studentNav = [
   { href: "/borrow", label: "Borrow" },
@@ -14,6 +16,7 @@ const adminNav = [
 ];
 
 export function Layout({ children }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const { user, role } = useCurrentUser();
   const { path } = useLocation();
   const nav = role === "admin" ? adminNav : studentNav;
@@ -24,7 +27,17 @@ export function Layout({ children }) {
   return (
     <div class="layout">
       <header class="layout-header">
-        <strong>Lab Borrow</strong>
+        <button class="hamburger" onClick={() => setMenuOpen(true)}>
+          ☰
+        </button>
+        <strong>Lab Track</strong>
+        <nav class="top-nav">
+          {nav.map((n) => (
+            <a key={n.href} href={n.href} class={isActive(n.href) ? "active" : ""}>
+              {n.label}
+            </a>
+          ))}
+        </nav>
         {user && (
           <button class="btn-link" onClick={logout}>
             Sign out
@@ -32,17 +45,42 @@ export function Layout({ children }) {
         )}
       </header>
 
+      {menuOpen && (
+        <>
+          <div
+            class="drawer-backdrop"
+            onClick={() => setMenuOpen(false)}
+          />
+
+          <aside class="drawer">
+            <button
+              class="drawer-close"
+              aria-label="Close menu"
+              onClick={() => setMenuOpen(false)}
+            >
+              ×
+            </button>
+
+            <nav class="drawer-nav">
+              {nav.map((n) => (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  class={isActive(n.href) ? "active" : ""}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {n.label}
+                </a>
+              ))}
+            </nav>
+          </aside>
+        </>
+      )}
+
+
       <main class="layout-main">{children}</main>
 
-      {user && (
-        <nav class="bottom-nav">
-          {nav.map((n) => (
-            <a href={n.href} class={isActive(n.href) ? "active" : ""}>
-              {n.label}
-            </a>
-          ))}
-        </nav>
-      )}
+      
     </div>
   );
 }
