@@ -10,6 +10,7 @@ const adminNav = [
   { href: "/admin", label: "Slips" },
   { href: "/admin/out", label: "Out now" },
   { href: "/admin/catalog", label: "Catalog" },
+  { href: "/borrow", label: "Borrow" },
 ];
 
 export function Layout({ children }) {
