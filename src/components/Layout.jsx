@@ -18,6 +18,8 @@ export function Layout({ children }) {
   const nav = role === "admin" ? adminNav : studentNav;
   const isActive = (href) => (href === "/admin" ? path === href : path.startsWith(href));
 
+  if (path === "/login") return <>{children}</>; 
+  
   return (
     <div class="layout">
       <header class="layout-header">
