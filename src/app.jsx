@@ -16,6 +16,7 @@ import { AdminSlipDetail } from "./pages/AdminSlipDetail";
 import { AdminOut } from "./pages/AdminOut";
 import { AdminCatalog } from "./pages/AdminCatalog";
 import { NotFound } from "./pages/NotFound";
+import Landing from "./pages/Landing";
 
 // Wrap a page so it needs login (or admin). Defined once, outside the component.
 const signedIn = (Page) => (props) => (
@@ -47,6 +48,7 @@ export function App() {
             <Route path="/" component={Home} />
             <Route path="/login" component={Login} />
 
+            <Route path="/landing" component={Landing} />
             <Route path="/borrow" component={BorrowPage} />
             <Route path="/slips" component={MySlipsPage} />
             <Route path="/slips/:id" component={SlipDetailPage} />

@@ -5,8 +5,14 @@ import { loginWithGoogle } from "../lib/auth";
 import "../styles/Login.css";
 import googleLogo from "../assets/google-logo.svg";
 
+//============
+import { useLocation } from "preact-iso"; 
+//=========
 
 export default function Login() {
+
+    const { route } = useLocation(); //TTESTINGGGGGG REMOVE LATER
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -89,6 +95,12 @@ export default function Login() {
 
           <button type="submit" class="btn-primary" disabled={loading}>
             {loading ? "Signing in..." : "Log in"}
+          </button>
+          <button type="button" class="btn-secondary" onClick={() => {
+            console.log("Temporary button clicked");
+            route("/landing");
+          }} disabled={loading}>
+            Temporary access (Skip login)
           </button>
         </form>
 
