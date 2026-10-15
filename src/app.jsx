@@ -1,14 +1,25 @@
+
+/*
+  Routing (from the preact-iso package)
+  LocationProvider: lets any component ask "what's the current URL?"
+  Router:           looks at the URL and shows the matching route
+  Route:            one line of the route table, "this path shows this component"
+*/
 import { LocationProvider, Router, Route } from "preact-iso";
+
+// Styles
 import "./styles/global.css";
 
-import { CurrentUserProvider } from "./lib/currentUser";
-import { Layout } from "./components/Layout";
-import { RequireRole } from "./components/RequireRole";
+// Components
+import { CurrentUserProvider } from "./lib/currentUser"; // Who's logged in? (and their role)
+import { Layout } from "./components/Layout";            // The page layout (header, nav, main content)
+import { RequireRole } from "./components/RequireRole";  // Only show this page if the user has the right role
 
-import { Home } from "./pages/Home";
-import Login from "./pages/Login"; // <- change to match CJ's file/export name
-import { Borrow } from "./pages/Borrow";
-import { MySlips } from "./pages/MySlips";
+// Pages
+import { Home } from "./pages/Home";                      // The home page (anyone can see this)
+import Login from "./pages/Login";                        // The login page (anyone can see this)
+import { Borrow } from "./pages/Borrow";                  // The borrow page (any signed-in user)
+import { MySlips } from "./pages/MySlips";                // The "my slips" page (any signed-in user)
 import { SlipDetail } from "./pages/SlipDetail";
 import { Survey } from "./pages/Survey";
 import { AdminSlips } from "./pages/AdminSlips";
@@ -18,7 +29,6 @@ import { AdminCatalog } from "./pages/AdminCatalog";
 import { NotFound } from "./pages/NotFound";
 import Landing from "./pages/Landing";
 
-// Wrap a page so it needs login (or admin). Defined once, outside the component.
 const signedIn = (Page) => (props) => (
   <RequireRole>
     <Page {...props} />

@@ -1,7 +1,9 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
+import { useLocation } from "preact-iso";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { loginWithGoogle } from "../lib/auth";
+import { useCurrentUser } from "../lib/currentUser";
 import "../styles/Login.css";
 import googleLogo from "../assets/google-logo.svg";
 
@@ -10,14 +12,18 @@ import { useLocation } from "preact-iso";
 //=========
 
 export default function Login() {
-
-    const { route } = useLocation(); //TTESTINGGGGGG REMOVE LATER
-
+    const { user, role, loading: userLoading } = useCurrentUser();
+    const { route } = useLocation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (userLoading || !user) return;
+        route(role === "admin" ? "/admin" : "/borrow");
+    }, [user, role, userLoading, route]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
