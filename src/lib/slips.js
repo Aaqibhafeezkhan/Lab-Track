@@ -1,5 +1,5 @@
 import {
-  collection, doc, addDoc, getDoc, getDocs, updateDoc, query, where,
+  collection, doc, addDoc, getDoc, getDocs, setDoc, updateDoc, query, where,
   onSnapshot, writeBatch, increment, serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -17,29 +17,27 @@ function makeCode(length = 5) {
 
 const byNewest = (a, b) => (b.createdAt?.seconds ?? Infinity) - (a.createdAt?.seconds ?? Infinity);
 
-// Student: submit a new slip. `data` holds the form fields (groupNumber, leaderName, members, items, signatures...).
+// Student: submit a new slip. Returns { id, done } right away. The ID is made
+// locally, so it works offline; `done` finishes once the server confirms.
 export function createSlip(data) {
-  return addDoc(slipsRef, {
+  const ref = doc(slipsRef);
+  const done = setDoc(ref, {
     ...data,
     code: makeCode(),
     status: "submitted",
     createdBy: auth.currentUser.uid,
     createdAt: serverTimestamp(),
   });
-}
-
-// Student: my slips, live. (Sorted in JS so we don't need a Firestore index.)
-export function watchMySlips(uid, callback) {
-  const q = query(slipsRef, where("createdBy", "==", uid));
-  return onSnapshot(q, (snap) => {
-    const slips = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    callback(slips.sort(byNewest));
-  });
+  return { id: ref.id, done };
 }
 
 export function watchSlip(id, callback) {
   return onSnapshot(doc(db, "slips", id), (snap) => {
-    callback(snap.exists() ? { id: snap.id, ...snap.data() } : null);
+    callback(
+      snap.exists()
+        ? { id: snap.id, ...snap.data(), pendingSync: snap.metadata.hasPendingWrites }
+        : null
+    );
   });
 }
 
