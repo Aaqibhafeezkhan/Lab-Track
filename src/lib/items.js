@@ -1,5 +1,5 @@
 import {
-  collection, doc, addDoc, updateDoc, query, where, onSnapshot, serverTimestamp,
+  collection, doc, addDoc, updateDoc, query, where, onSnapshot, serverTimestamp, increment,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -32,4 +32,15 @@ export function updateItem(id, changes) {
 // Deactivate instead of deleting, so old slips still make sense.
 export function setItemActive(id, active) {
   return updateDoc(doc(db, "items", id), { active });
+}
+
+// Change an item's name or total. Available stock moves by the same difference,
+// so items that are currently borrowed stay consistent.
+export function editItem(item, { name, totalQty }) {
+  const diff = totalQty - item.totalQty;
+  return updateDoc(doc(db, "items", item.id), {
+    name,
+    totalQty,
+    availableQty: increment(diff),
+  });
 }

@@ -41,6 +41,15 @@ export function watchSlip(id, callback) {
   });
 }
 
+// Student: my slips, live. (Sorted in JS so we don't need a Firestore index.)
+export function watchMySlips(uid, callback) {
+  const q = query(slipsRef, where("createdBy", "==", uid));
+  return onSnapshot(q, (snap) => {
+    const slips = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    callback(slips.sort(byNewest));
+  });
+}
+
 // Admin: slips with a given status ("submitted", "released", ...), live.
 export function watchSlipsByStatus(status, callback) {
   const q = query(slipsRef, where("status", "==", status));
