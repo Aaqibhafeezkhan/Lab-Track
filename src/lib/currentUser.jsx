@@ -2,7 +2,7 @@ import { createContext } from "preact";
 import { useContext, useEffect, useState } from "preact/hooks";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
-import { watchAuth } from "./auth";
+import { watchAuth, finishRedirectLogin } from "./auth";
 
 const CurrentUserContext = createContext({
   user: null,
@@ -28,6 +28,7 @@ export function CurrentUserProvider({ children }) {
       } else {
         setProfileReady(false);
       }
+      finishRedirectLogin();
     });
   }, []);
 
