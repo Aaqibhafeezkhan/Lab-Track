@@ -50,7 +50,7 @@ export default function Login() {
     return (
     <main class="login-page">
       <section class="login-card">
-        <p class="eyebrow">LAB TRACK</p>
+        <p class="eyebrow">CSU | LAB TRACK</p>
         <h1>Welcome back</h1>
         <p class="subtitle">Sign in to borrow or manage lab equipment</p>
 
