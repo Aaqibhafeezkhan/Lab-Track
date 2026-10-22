@@ -14,6 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm ci && npm run build
+        env:
+          VITE_FIREBASE_API_KEY: AIzaSyCBTg9u0td9im1P1Tt9YSQD1VPAMIIi9K0
+          VITE_FIREBASE_AUTH_DOMAIN: lab-track-55119.web.app
+          VITE_FIREBASE_PROJECT_ID: lab-track-55119
+          VITE_FIREBASE_APP_ID: 1:645908808781:web:cb05ca883c510b1d52c804
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
