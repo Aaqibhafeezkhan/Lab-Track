@@ -1,7 +1,7 @@
-// src/lib/auth.js
 import {
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
@@ -10,33 +10,43 @@ import { auth, db } from "../firebase";
 
 const provider = new GoogleAuthProvider();
 
-// Sign in with Google, then make sure this person has a profile in Firestore.
-export async function loginWithGoogle() {
-  const result = await signInWithPopup(auth, provider);
-  const user = result.user;
+// Sends the whole tab to Google. The page leaves, so nothing after this line runs.
+export function loginWithGoogle() {
+  return signInWithRedirect(auth, provider);
+}
 
-  const profileRef = doc(db, "users", user.uid);
-  const snap = await getDoc(profileRef);
-
-  // Only create the profile the first time. Students aren't allowed to
-  // update it, so writing again on a later login would be denied.
-  if (!snap.exists()) {
-    await setDoc(profileRef, {
-      email: user.email,
-      name: user.displayName,
-      role: "student", // the rules require exactly this on creation
-      createdAt: serverTimestamp(),
-    });
+// First login only: create the users/{uid} profile. Never makes login "fail".
+async function ensureProfile(user) {
+  try {
+    const profileRef = doc(db, "users", user.uid);
+    const snap = await getDoc(profileRef);
+    if (!snap.exists()) {
+      await setDoc(profileRef, {
+        email: user.email,
+        name: user.displayName,
+        role: "student", // the rules require exactly this on creation
+        createdAt: serverTimestamp(),
+      });
+    }
+  } catch (err) {
+    console.error("Could not check/create profile:", err);
   }
+}
 
-  return user;
+// Call once when the app starts. If we just came back from Google, finish the login.
+export async function finishRedirectLogin() {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result?.user) await ensureProfile(result.user);
+  } catch (err) {
+    console.error("Redirect sign-in failed:", err);
+  }
 }
 
 export function logout() {
   return signOut(auth);
 }
 
-// Lets a component hear about login/logout. Returns a function that stops listening.
 export function watchAuth(callback) {
   return onAuthStateChanged(auth, callback);
 }
