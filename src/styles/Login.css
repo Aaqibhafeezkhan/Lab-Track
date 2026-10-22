@@ -15,13 +15,24 @@
 /* Mobile Base (360px+) */
 .login-page {
   min-height: 100dvh;
-  background: var(--color-bg);
+  background-color: var(--color-green);
+  background-image: 
+    linear-gradient(
+      135deg,
+      rgba(10, 77, 44, 0.78) 0%,
+      rgba(0, 32, 16, 0.88) 100%
+    ),
+    url('../assets/login-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
   padding: 24px 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Keeps card above mobile keyboard */
+  justify-content: center;
 }
 
 .login-card {
@@ -32,7 +43,7 @@
   padding: 24px;
   box-sizing: border-box;
   text-align: left;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
 }
 
 .eyebrow {
@@ -186,7 +197,7 @@
 /* Tablet and Desktop (768px+) */
 @media (min-width: 768px) {
   .login-page {
-    justify-content: center;
+    background-attachment: fixed;
     padding: 48px 24px;
   }
 
