@@ -7,10 +7,6 @@ import { useCurrentUser } from "../lib/currentUser";
 import "../styles/Login.css";
 import googleLogo from "../assets/google-logo.svg";
 
-//============
-import { useLocation } from "preact-iso"; 
-//=========
-
 export default function Login() {
     const { user, role, loading: userLoading } = useCurrentUser();
     const { route } = useLocation();
@@ -99,14 +95,9 @@ export default function Login() {
             </div>
           </div>
 
+
           <button type="submit" class="btn-primary" disabled={loading}>
             {loading ? "Signing in..." : "Log in"}
-          </button>
-          <button type="button" class="btn-secondary" onClick={() => {
-            console.log("Temporary button clicked");
-            route("/landing");
-          }} disabled={loading}>
-            Temporary access (Skip login)
           </button>
         </form>
 

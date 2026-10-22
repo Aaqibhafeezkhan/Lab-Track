@@ -11,7 +11,7 @@ const studentNav = [
 const adminNav = [
   { href: "/admin", label: "Slips" },
   { href: "/admin/out", label: "Out now" },
-  { href: "/admin/catalog", label: "Catalog" },
+  { href: "/admin/catalog", label: "Inventory" },
   { href: "/borrow", label: "Borrow" },
 ];
 
