@@ -36,19 +36,9 @@ and the admin will only adopt a digital system if it is at least as convenient a
 - Slips and returns save locally and sync automatically when signal returns
 - "Pending sync" indicator
 
-## Slip status flow
-draft → submitted → released → returned
-
-## Out of scope (v1)
-Damage workflow, remote instructor approval, email notifications
-
 ## Tech stack
 - Vite + Preact (JavaScript)
 - Plain CSS (mobile-first)
 - Firebase: Firestore (with offline persistence), Authentication (Google)
 - vite-plugin-pwa, qrcode, signature_pad
 - Hosting: Firebase Hosting (free plan)
-
-## Open questions
-- Instructor approval method (draw-to-sign assumed for v1)
-- Who can edit stock quantities (admin only assumed)
