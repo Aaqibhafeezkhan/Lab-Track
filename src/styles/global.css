@@ -289,3 +289,11 @@ body {
 .catalog-item > div { flex: 1; min-width: 140px; }
 .catalog-item input { flex: 1 1 120px; margin-top: 0; }
 .catalog-item input[type="number"] { flex: 0 0 90px; }
+/* ---------- Satisfaction survey ---------- */
+.survey-opt-in { display: flex !important; align-items: flex-start; gap: var(--space-2); margin: var(--space-4) 0 !important; color: var(--color-text) !important; }
+.layout .survey-opt-in input { flex: none; width: 20px; min-height: 20px; margin: 3px 0 0; }
+.survey-question { margin: var(--space-4) 0; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.survey-question legend { padding: 0 var(--space-1); font-weight: var(--font-weight-semibold); }
+.survey-ratings { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.layout .survey-ratings label { display: flex; align-items: center; gap: var(--space-1); margin: 0; color: var(--color-text); }
+.layout .survey-ratings input { width: 18px; min-height: 18px; margin: 0; }
