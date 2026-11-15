@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "preact/hooks";
 import { useLocation } from "preact-iso";
 import { watchItems } from "../lib/items";
 import { createSlip } from "../lib/slips";
-import { submitSurvey } from "../lib/surveys";
 import { useCurrentUser } from "../lib/currentUser";
 import { ItemRow } from "../components/ItemRow";
 import { InstallAppButton } from "../components/InstallAppButton";
@@ -30,7 +29,6 @@ export function Borrow() {
   const [members, setMembers] = useState([{ name: "", idNumber: "" }]);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [autoFillSurvey, setAutoFillSurvey] = useState(false);
 
   useEffect(() => {
     const onOnline = () => setIsOnline(true);
@@ -93,7 +91,7 @@ export function Borrow() {
     setStep("review");
   }
 
-  async function submit() {
+  function submit() {
     if (submitting) return;
     setSubmitting(true);
 
@@ -121,22 +119,7 @@ export function Borrow() {
     // Not awaited on purpose, so it works offline. Go straight to the next page.
     done.catch((err) => console.error("Slip was not saved:", err));
 
-    if (offline) {
-      route(`/slips/${id}`);
-      return;
-    }
-
-    if (autoFillSurvey) {
-      try {
-        await submitSurvey(id, { name: details.leaderName.trim(), college: "", improvement: "" }, true);
-        route(`/slips/${id}`);
-      } catch (err) {
-        console.error("Survey was not saved:", err);
-        route(`/survey/${id}`);
-      }
-    } else {
-      route(`/survey/${id}`);
-    }
+    route(`/slips/${id}`);
   }
 
   // ---------- Step 1: pick items ----------
@@ -245,15 +228,6 @@ export function Borrow() {
           </ul>
         </>
       )}
-
-      <label class="survey-opt-in">
-        <input
-          type="checkbox"
-          checked={autoFillSurvey}
-          onChange={(e) => setAutoFillSurvey(e.currentTarget.checked)}
-        />
-        Do you want to automatically fill up the form? It gives the survey the best satisfaction rating by default.
-      </label>
 
       <div class="actions">
         <button class="btn-link" onClick={() => setStep("details")}>Back</button>

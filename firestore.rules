@@ -38,18 +38,5 @@ match /users/{userId} {
             allow update: if isAdmin();
             allow delete: if false;
         }
-
-        // Surveys: anyone signed in can submit one, only admins can read them
-        match /surveys/{surveyId} {
-            allow create: if isSignedIn();
-            allow read: if isAdmin();
-            allow update, delete: if false;
-        }
-
-        // config (survey questions): anyone signed in can read, only admins can edit
-        match /config/{docId} {
-            allow read: if isSignedIn();
-            allow write: if isAdmin();
-        }
     }
 }

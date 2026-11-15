@@ -14,14 +14,5 @@ slip/{slipId}                  // Borrower's slip
   instructorName (string), instructorSignature (string)
   releasedBy (string), returnNotes (string)
 
-surveys/{surveyId}             // satisfactory survey
-  slipId (string), createdAt (timestamp)
-  name (string, optional), college (string)
-  ratings (map)                // { q1: 5, q2: 4, ... }
-  improvement (string)
-
-config/survey
-  questions (array of strings)
-
 users/{uid}
   email (string), name (string), role (string)   // student | admin

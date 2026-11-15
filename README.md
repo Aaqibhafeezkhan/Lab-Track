@@ -18,7 +18,6 @@ and the admin will only adopt a digital system if it is at least as convenient a
 - Build a borrow slip from the equipment catalog (quantity steppers)
 - Instructor signature (draw-to-sign on screen)
 - Submit slip and receive a slip QR code plus a short backup code
-- Fill out the survey after the return is completed
 
 **Admin**
 - Scan or enter a slip code to open a slip
