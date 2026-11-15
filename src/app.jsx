@@ -21,7 +21,6 @@ import Login from "./pages/Login";                        // The login page (any
 import { Borrow } from "./pages/Borrow";                  // The borrow page (any signed-in user)
 import { MySlips } from "./pages/MySlips";                // The "my slips" page (any signed-in user)
 import { SlipDetail } from "./pages/SlipDetail";
-import { Survey } from "./pages/Survey";
 import { AdminSlips } from "./pages/AdminSlips";
 import { AdminSlipDetail } from "./pages/AdminSlipDetail";
 import { AdminOut } from "./pages/AdminOut";
@@ -43,7 +42,6 @@ const adminOnly = (Page) => (props) => (
 const BorrowPage = signedIn(Borrow);
 const MySlipsPage = signedIn(MySlips);
 const SlipDetailPage = signedIn(SlipDetail);
-const SurveyPage = signedIn(Survey);
 const AdminSlipsPage = adminOnly(AdminSlips);
 const AdminSlipDetailPage = adminOnly(AdminSlipDetail);
 const AdminOutPage = adminOnly(AdminOut);
@@ -62,7 +60,6 @@ export function App() {
             <Route path="/borrow" component={BorrowPage} />
             <Route path="/slips" component={MySlipsPage} />
             <Route path="/slips/:id" component={SlipDetailPage} />
-            <Route path="/survey/:id" component={SurveyPage} />
 
             <Route path="/admin" component={AdminSlipsPage} />
             <Route path="/admin/slips/:id" component={AdminSlipDetailPage} />
